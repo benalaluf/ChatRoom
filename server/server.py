@@ -66,18 +66,20 @@ class Server:
                     self.broadcast(packet)
 
                 if packet_type == PacketType.LOAD_CHAT.value:
-
-                    chat_history = ''
-                    for line in self.chat_messages:
-                        chat_history.join(line + '\n')
-
-                    packet = Packet(PacketType.LOAD_CHAT, chat_history.encode())
-                    SendPacket.send_packet(conn, packet)
+                    if len(self.chat_messages) > 0 :
+                        chat_history = ''
+                        for line in self.chat_messages:
+                            chat_history += line + '\n'
+                        packet = Packet(PacketType.LOAD_CHAT, chat_history.encode())
+                        SendPacket.send_packet(conn, packet)
 
             except Exception:
+                print(conn.getpeername(), "left")
+                self.connected_clients.remove(conn)
+                self.connected_clients_nicknames.pop(str(conn))
                 conn.close()
 
 
 if __name__ == '__main__':
-    server = Server('localhost', 3232)
+    server = Server('localhost', 4343)
     server.accept_connections()

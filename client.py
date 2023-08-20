@@ -30,6 +30,7 @@ class Client:
                 SendPacket.send_packet(self.client, packet)
 
             if packet_type == PacketType.LOAD_CHAT.value:
+                print('recved chat history')
                 chat = payload.decode()
                 print(chat)
 
@@ -51,4 +52,4 @@ class Client:
 
 
 if __name__ == '__main__':
-    Client('localhost', 3232).start()
+    Client('localhost', 4343).start()
