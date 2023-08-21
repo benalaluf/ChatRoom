@@ -80,6 +80,4 @@ class Server:
                 conn.close()
 
 
-if __name__ == '__main__':
-    server = Server('localhost', 4343)
-    server.accept_connections()
+
