@@ -51,6 +51,8 @@ class Server:
             packet = Packet(PacketType.NEW_USER, f'{username}:{color}'.encode())
             self.broadcast(packet)
 
+            self.load_chat(client)
+
             print(f'New Client: {payload, addr}')
 
         else:
@@ -69,12 +71,8 @@ class Server:
             self.broadcast(packet)
 
         if packet.packet_type == PacketType.LOAD_CHAT:
-            if len(self.chat_messages) > 0:
-                chat_history = ''
-                for line in self.chat_messages:
-                    chat_history += line + '\n'
-                packet = Packet(PacketType.LOAD_CHAT, chat_history.encode())
-                SendPacket.send_packet(client.conn, packet)
+            self.load_chat(client)
+
 
     def handel_client(self, client: ClientData):
         while True:
@@ -87,3 +85,17 @@ class Server:
                 print(f"{client.username}: Left")
                 self.connected_clients.remove(client)
                 client.conn.close()
+
+
+    def load_chat(self, client: ClientData):
+        if len(self.chat_messages) > 0:
+            chat_history = ''
+            for line in self.chat_messages:
+                chat_history += line + '\n'
+            packet = Packet(PacketType.LOAD_CHAT, chat_history.encode())
+            SendPacket.send_packet(client.conn, packet)
+
+        for user in self.connected_clients:
+            packet = Packet(PacketType.NEW_USER, f'{user.username}:{user.color}'.encode())
+            SendPacket.send_packet(client.conn, packet)
+            print(packet.payload.decode(), client.username)

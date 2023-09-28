@@ -5,22 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be1828b6-268a-47d0-b34c-00a875ad3e89" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/protocol/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/protocol/client_data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/check_color.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/colored_text.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/connections/client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/protocol/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/connections/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/protocol/protocol.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/protocol/protocol.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/connections/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/connections/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/connections/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +50,7 @@
       <recent name="$PROJECT_DIR$/client" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main_client">
+  <component name="RunManager" selected="Python.main">
     <configuration name="client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ChatRoom" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -169,9 +158,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main_client" />
-        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.main_server" />
+        <item itemvalue="Python.main_client" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.client" />
         <item itemvalue="Python.colored_text" />
       </list>

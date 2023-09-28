@@ -52,7 +52,7 @@ class ChatGUI(ABC):
     def __init__(self):
         self.app = QApplication(sys.argv)
         qdarktheme.setup_theme()
-        self.window = QMainWindow()
+        self.window = QWidget()
         self.initUI()
         self.messages = []
 
@@ -62,7 +62,7 @@ class ChatGUI(ABC):
 
         self.layout = QVBoxLayout()
 
-        self.message_view = QListView()
+        self.message_view = QListView(self.window)
         self.model = QStringListModel()
         self.message_view.setModel(self.model)
         self.message_view.setItemDelegate(MessageDelegate())
@@ -70,13 +70,17 @@ class ChatGUI(ABC):
         self.layout.addWidget(self.message_view)
 
         self.input_layout = QHBoxLayout()
-        self.input_field = QLineEdit()
-        self.send_button = QPushButton('Send')
+        self.input_field = QLineEdit(self.window)
+        self.send_button = QPushButton('Send', self.window)
         self.send_button.clicked.connect(self.send_message)
         self.input_layout.addWidget(self.input_field)
         self.input_layout.addWidget(self.send_button)
 
         self.layout.addLayout(self.input_layout)
+
+        self.window.setLayout(self.layout)
+
+
 
 
     def addMessageToGUI(self, message):
