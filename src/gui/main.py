@@ -1,15 +1,24 @@
 import sys
+from abc import ABC, abstractmethod
 
+import qdarktheme
 from PyQt5.QtGui import QTextDocument, QColor
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QListView, QLineEdit, QPushButton, \
-    QAbstractItemView, QStyledItemDelegate
+    QAbstractItemView, QStyledItemDelegate, QMainWindow
 from PyQt5.QtCore import Qt, QStringListModel
+from src.protocol.client_data import ClientData
+from colour import Color
 
 
 class MessageDelegate(QStyledItemDelegate):
+    username_colors = dict()
+
     def __init__(self):
         super().__init__()
-        self.username_colors = {'You': QColor('cyan')}
+
+    @staticmethod
+    def update_usernames_color(username, color):
+        MessageDelegate.username_colors.update({username: color})
 
     def paint(self, painter, option, index):
         painter.save()
@@ -25,7 +34,7 @@ class MessageDelegate(QStyledItemDelegate):
             self.username_colors[username] = color
 
         color = self.username_colors[username]
-        username_colored = f'<font color="{color.name()}">{username}</font>'
+        username_colored = f'<font color="{color}">{username}</font>'
 
         formatted_message = f"{username_colored}: {content}"
 
@@ -39,20 +48,21 @@ class MessageDelegate(QStyledItemDelegate):
         painter.restore()
 
 
-class ChatGUI(QWidget):
+class ChatGUI(ABC):
     def __init__(self):
-        super().__init__()
-
+        self.app = QApplication(sys.argv)
+        qdarktheme.setup_theme()
+        self.window = QMainWindow()
         self.initUI()
         self.messages = []
 
     def initUI(self):
-        self.setWindowTitle('Modern Chat GUI')
-        self.setGeometry(100, 100, 600, 400)
+        self.window.setWindowTitle('ChatRoom')
+        self.window.setGeometry(100, 100, 600, 800)
 
         self.layout = QVBoxLayout()
 
-        self.message_view = QListView(self)
+        self.message_view = QListView()
         self.model = QStringListModel()
         self.message_view.setModel(self.model)
         self.message_view.setItemDelegate(MessageDelegate())
@@ -60,26 +70,29 @@ class ChatGUI(QWidget):
         self.layout.addWidget(self.message_view)
 
         self.input_layout = QHBoxLayout()
-        self.input_field = QLineEdit(self)
-        self.send_button = QPushButton('Send', self)
-        self.send_button.clicked.connect(self.sendMessage)
+        self.input_field = QLineEdit()
+        self.send_button = QPushButton('Send')
+        self.send_button.clicked.connect(self.send_message)
         self.input_layout.addWidget(self.input_field)
         self.input_layout.addWidget(self.send_button)
 
         self.layout.addLayout(self.input_layout)
 
-        self.setLayout(self.layout)
 
-    def sendMessage(self):
-        message = self.input_field.text()
+    def addMessageToGUI(self, message):
         if message:
-            self.messages.append("You: " + message)
+            self.messages.append(message)
             self.model.setStringList(self.messages)
-            self.input_field.clear()
 
+    def run(self):
+        self.window.show()
+        sys.exit(self.app.exec_())
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    chat_window = ChatGUI()
-    chat_window.show()
-    sys.exit(app.exec_())
+    def get_input_text(self):
+        text = self.input_field.text()
+        self.input_field.clear()
+        return text
+
+    @abstractmethod
+    def send_message(self):
+        pass
