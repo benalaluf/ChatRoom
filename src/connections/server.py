@@ -16,6 +16,7 @@ class Server:
         self.server.bind(self.addr)
 
         self.connected_clients = list()
+        self.was_conncted_clients= list()
 
         self.chat_messages = list()
 
@@ -69,8 +70,10 @@ class Server:
 
             packet = Packet(PacketType.MSG, message.encode())
             self.broadcast(packet)
+            print(message)
 
         if packet.packet_type == PacketType.LOAD_CHAT:
+            print(client.username + "asked to loadchat")
             self.load_chat(client)
 
 
@@ -84,7 +87,15 @@ class Server:
             except Exception:
                 print(f"{client.username}: Left")
                 self.connected_clients.remove(client)
+                self.was_conncted_clients.append(client)
                 client.conn.close()
+                print("connected clients")
+                for client in self.connected_clients:
+                    print(client.username)
+                break
+
+        print("breadked")
+
 
 
     def load_chat(self, client: ClientData):
@@ -94,8 +105,9 @@ class Server:
                 chat_history += line + '\n'
             packet = Packet(PacketType.LOAD_CHAT, chat_history.encode())
             SendPacket.send_packet(client.conn, packet)
+            print(chat_history)
 
-        for user in self.connected_clients:
+        for user in self.connected_clients + self.was_conncted_clients:
             packet = Packet(PacketType.NEW_USER, f'{user.username}:{user.color}'.encode())
             SendPacket.send_packet(client.conn, packet)
-            print(packet.payload.decode(), client.username)
+            print(packet.payload.decode())

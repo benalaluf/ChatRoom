@@ -21,34 +21,41 @@ class MessageDelegate(QStyledItemDelegate):
         MessageDelegate.username_colors.update({username: color})
 
     def paint(self, painter, option, index):
-        painter.save()
+        try:
+            painter.save()
 
-        message = index.data(Qt.DisplayRole)
-        parts = message.split(": ", 1)
-        username = parts[0]
-        content = parts[1]
+            message = index.data(Qt.DisplayRole)
 
-        if username not in self.username_colors:
-            # Generate a color based on the hash of the username
-            color = QColor(hash(username) % 256, hash(username + "color") % 256, hash(username + "text") % 256)
-            self.username_colors[username] = color
+            if message:
+                if message[0] == '*':
+                    message = f'<font color="gray">{message}</font>'
+                parts = message.split(": ", 1)
+                username = parts[0]
+                content = parts[1]
 
-        color = self.username_colors[username]
-        username_colored = f'<font color="{color}">{username}</font>'
+                if username not in self.username_colors:
+                    # Generate a color based on the hash of the username
+                    color = QColor(hash(username) % 256, hash(username + "color") % 256, hash(username + "text") % 256)
+                    self.username_colors[username] = color.name()
 
-        formatted_message = f"{username_colored}: {content}"
+                color = self.username_colors[username]
+                username_colored = f'<font color="{color}">{username}</font>'
 
-        document = QTextDocument()
-        document.setHtml(formatted_message)
-        option.text = ""
-        self.initStyleOption(option, index)
-        painter.translate(option.rect.topLeft())
-        document.drawContents(painter)
+                formatted_message = f"{username_colored}: {content}"
 
-        painter.restore()
+                document = QTextDocument()
+                document.setHtml(formatted_message)
+                option.text = ""
+                self.initStyleOption(option, index)
+                painter.translate(option.rect.topLeft())
+                document.drawContents(painter)
+
+            painter.restore()
+        except Exception as e:
+            print(e)
 
 
-class ChatGUI(ABC):
+class ChatGUI:
     def __init__(self):
         self.app = QApplication(sys.argv)
         qdarktheme.setup_theme()
@@ -72,7 +79,6 @@ class ChatGUI(ABC):
         self.input_layout = QHBoxLayout()
         self.input_field = QLineEdit(self.window)
         self.send_button = QPushButton('Send', self.window)
-        self.send_button.clicked.connect(self.send_message)
         self.input_layout.addWidget(self.input_field)
         self.input_layout.addWidget(self.send_button)
 
@@ -80,13 +86,9 @@ class ChatGUI(ABC):
 
         self.window.setLayout(self.layout)
 
-
-
-
-    def addMessageToGUI(self, message):
-        if message:
-            self.messages.append(message)
-            self.model.setStringList(self.messages)
+    def addMessageToGUI(self, message: list):
+        self.messages.extend(message)
+        self.model.setStringList(self.messages)
 
     def run(self):
         self.window.show()
@@ -97,6 +99,5 @@ class ChatGUI(ABC):
         self.input_field.clear()
         return text
 
-    @abstractmethod
-    def send_message(self):
-        pass
+    def connect_send_func(self, func):
+        self.send_button.clicked.connect(func)
