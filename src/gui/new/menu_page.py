@@ -15,7 +15,7 @@ class MainMenuPage(QWidget):
 
         title_label = QLabel("ChatRoom")
         title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        title_label.setStyleSheet("font-size: 36px;")  # Adjust the font size
+        title_label.setStyleSheet("font-size: 36px;")
         layout.addWidget(title_label)
 
         layout.addSpacing(150)
@@ -26,7 +26,7 @@ class MainMenuPage(QWidget):
                                            "border-radius: 10px;")
         self.download_button.setToolTip("Join a chat")
         self.download_button.clicked.connect(self.parent.login)
-        self.download_button.setFixedHeight(80)  # Increase button height
+        self.download_button.setFixedHeight(80)
         button_layout.addWidget(self.download_button)
 
 
