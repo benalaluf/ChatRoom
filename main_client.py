@@ -2,6 +2,5 @@
 
 from src.app.client_app import ClientApp
 
-
 if __name__ == '__main__':
-    ClientApp('0.0.0.0', 6969).main()
+    ClientApp('0.0.0.0', 7874).main()

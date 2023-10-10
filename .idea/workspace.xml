@@ -5,13 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be1828b6-268a-47d0-b34c-00a875ad3e89" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/gui/new/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/new/chat_page.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/new/client_gui.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/new/login_page.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/new/menu_page.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gui/new/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/client_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/client_app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connections/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/connections/client_conn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connections/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/connections/server_conn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/main_chat_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/main_chat_gui.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

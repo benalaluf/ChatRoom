@@ -1,26 +1,35 @@
+import sys
 import threading
 
+import qdarktheme
+from PyQt5.QtWidgets import QApplication
+
 from src.connections.client_conn import ClientConn
-from src.gui.main import ClientGUI, MessageDelegate
+from src.gui.new.chat_page import MessageDelegate
+from src.gui.new.client_gui import ClientGUI
 from src.protocol.protocol import Packet, PacketType
 
 
-class ClientApp(ClientConn, ClientGUI):
+class ClientApp(ClientConn):
 
     def __init__(self, ip, port):
-        ClientConn.__init__(self, ip, port)
-        ClientGUI.__init__(self)
+        super().__init__(ip, port)
+        self.app = QApplication(sys.argv)
+        qdarktheme.setup_theme()
+        self.client_gui = ClientGUI()
+        self.connect_front_to_back()
 
     def handle_packet(self, packet: Packet):
+        print('recvec packet')
         if packet.packet_type == PacketType.MSG:
-            self.addMessageToGUI([packet.payload.decode()])
+            self.client_gui.chat_page.add_msg_to_chat([packet.payload.decode()])
             print(packet.payload.decode())
 
         if packet.packet_type == PacketType.LOAD_CHAT:
             print('received chat history')
             chat = packet.payload.decode()
             chat = chat.split('\n')
-            self.addMessageToGUI(chat)
+            self.client_gui.chat_page.add_msg_to_chat(chat)
 
         if packet.packet_type == PacketType.NEW_USER:
             payload = packet.payload.decode().split(':')
@@ -29,14 +38,24 @@ class ClientApp(ClientConn, ClientGUI):
             MessageDelegate.update_usernames_color(username, color)
             print('new client', username, color)
 
+    def connect_front_to_back(self):
+        self.client_gui.login_page.login_button.clicked.connect(self.app_register)
+        self.client_gui.chat_page.send_button.clicked.connect(self.send)
+    def run_gui(self):
+        self.client_gui.show()
+        sys.exit(self.app.exec_())
+
     def send(self):
-        message = self.get_input_text()
+        message = self.client_gui.chat_page.get_input_text()
         self.send_message(message)
 
+    def app_register(self):
+        username = self.client_gui.login_page.username_field.text()
+        color = self.client_gui.login_page.color_field.text()
+        super().register(username, color)
+        self.client_gui.chat()
 
     def main(self):
-        username= input()
-        color = input()
-        ClientConn.register(self, username,color)
-        ClientConn.main(self)
-        ClientGUI.run(self)
+        threading.Thread(target=super().main).start()
+        self.run_gui()
+

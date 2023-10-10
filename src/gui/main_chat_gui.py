@@ -49,7 +49,6 @@ class MainMenu(QWidget):
         self.input_layout = QHBoxLayout()
         self.input_field = QLineEdit()
         self.send_button = QPushButton('Send')
-        self.send_button.clicked.connect(self.send)
         self.input_layout.addWidget(self.input_field)
         self.input_layout.addWidget(self.send_button)
 
@@ -66,9 +65,6 @@ class MainMenu(QWidget):
         self.input_field.clear()
         return text
 
-
-    def send(self):
-        print(self.get_input_text())
 
 class Chat(QWidget):
     def __init__(self):
