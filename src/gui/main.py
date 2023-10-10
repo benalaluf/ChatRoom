@@ -55,7 +55,7 @@ class MessageDelegate(QStyledItemDelegate):
             print(e)
 
 
-class ChatGUI:
+class ClientGUI(ABC):
     def __init__(self):
         self.app = QApplication(sys.argv)
         qdarktheme.setup_theme()
@@ -79,6 +79,7 @@ class ChatGUI:
         self.input_layout = QHBoxLayout()
         self.input_field = QLineEdit(self.window)
         self.send_button = QPushButton('Send', self.window)
+        self.send_button.clicked.connect(self.send)
         self.input_layout.addWidget(self.input_field)
         self.input_layout.addWidget(self.send_button)
 
@@ -99,5 +100,6 @@ class ChatGUI:
         self.input_field.clear()
         return text
 
-    def connect_send_func(self, func):
-        self.send_button.clicked.connect(func)
+    @abstractmethod
+    def send(self):
+        pass

@@ -5,7 +5,7 @@ import threading
 
 from src.protocol.client_data import ClientData
 from src.protocol.protocol import SendPacket, Packet, PacketType, HandelPacket
-from src.gui.main import ChatGUI
+from src.gui.main import ClientGUI
 
 
 class Server:
