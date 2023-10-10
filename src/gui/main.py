@@ -4,10 +4,8 @@ from abc import ABC, abstractmethod
 import qdarktheme
 from PyQt5.QtGui import QTextDocument, QColor
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QListView, QLineEdit, QPushButton, \
-    QAbstractItemView, QStyledItemDelegate, QMainWindow
+    QAbstractItemView, QStyledItemDelegate
 from PyQt5.QtCore import Qt, QStringListModel
-from src.protocol.client_data import ClientData
-from colour import Color
 
 
 class MessageDelegate(QStyledItemDelegate):
@@ -34,7 +32,6 @@ class MessageDelegate(QStyledItemDelegate):
                 content = parts[1]
 
                 if username not in self.username_colors:
-                    # Generate a color based on the hash of the username
                     color = QColor(hash(username) % 256, hash(username + "color") % 256, hash(username + "text") % 256)
                     self.username_colors[username] = color.name()
 

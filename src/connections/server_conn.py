@@ -5,7 +5,6 @@ import threading
 
 from src.protocol.client_data import ClientData
 from src.protocol.protocol import SendPacket, Packet, PacketType, HandelPacket
-from src.gui.main import ClientGUI
 
 
 class Server:
@@ -55,6 +54,10 @@ class Server:
             self.load_chat(client)
 
             print(f'New Client: {payload, addr}')
+            message = f"*{client.username} joined"
+            self.chat_messages.append(message)
+            packet = Packet(PacketType.MSG,payload=message.encode())
+            self.broadcast(packet)
 
         else:
             print(f'refuse to register: {addr}')
@@ -85,7 +88,11 @@ class Server:
                 self.handel_packet(packet, client)
 
             except Exception:
-                print(f"{client.username}: Left")
+                message = f"*{client.username} Left"
+                print(message)
+                self.chat_messages.append(message)
+                packet = Packet(PacketType.MSG, payload=message.encode())
+                self.broadcast(packet)
                 self.connected_clients.remove(client)
                 self.was_conncted_clients.append(client)
                 client.conn.close()

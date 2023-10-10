@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QStringListModel, Qt
-from PyQt5.QtGui import QColor, QTextDocument
+from PyQt5.QtGui import QColor, QTextDocument, QFont
 from PyQt5.QtWidgets import QWidget, QListView, QAbstractItemView, QHBoxLayout, QLineEdit, QPushButton, QVBoxLayout, \
     QStyledItemDelegate
 
@@ -48,6 +48,7 @@ class MessageDelegate(QStyledItemDelegate):
         MessageDelegate.username_colors.update({username: color})
 
     def paint(self, painter, option, index):
+
         try:
             painter.save()
 
@@ -55,20 +56,20 @@ class MessageDelegate(QStyledItemDelegate):
 
             if message:
                 if message[0] == '*':
-                    message = f'<font color="gray">{message}</font>'
-                parts = message.split(": ", 1)
-                username = parts[0]
-                content = parts[1]
+                    formatted_message = f'<font color="gray">{message[1:]}</font>'
+                else:
+                    parts = message.split(": ", 1)
+                    username = parts[0]
+                    content = parts[1]
 
-                if username not in self.username_colors:
-                    # Generate a color based on the hash of the username
-                    color = QColor(hash(username) % 256, hash(username + "color") % 256, hash(username + "text") % 256)
-                    self.username_colors[username] = color.name()
+                    if username not in self.username_colors:
+                        color = QColor(hash(username) % 256, hash(username + "color") % 256, hash(username + "text") % 256)
+                        self.username_colors[username] = color.name()
 
-                color = self.username_colors[username]
-                username_colored = f'<font color="{color}">{username}</font>'
+                    color = self.username_colors[username]
+                    username_colored = f'<font color="{color}">{username}</font>'
 
-                formatted_message = f"{username_colored}: {content}"
+                    formatted_message = f"{username_colored}: {content}"
 
                 document = QTextDocument()
                 document.setHtml(formatted_message)

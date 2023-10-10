@@ -5,17 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be1828b6-268a-47d0-b34c-00a875ad3e89" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/gui/new/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/new/chat_page.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/new/client_gui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/new/login_page.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/new/menu_page.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/new/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/client_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/client_app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/main_chat_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/main_chat_gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/connections/server_conn.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/connections/server_conn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/new/chat_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/new/chat_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/new/login_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/new/login_page.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,14 +45,14 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/gui/new" />
       <recent name="$PROJECT_DIR$/src/gui" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/connections" />
       <recent name="$PROJECT_DIR$/tests" />
-      <recent name="$PROJECT_DIR$/client" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main_server">
+  <component name="RunManager" selected="Python.main_client">
     <configuration name="client_app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ChatRoom" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -78,7 +74,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="client_gui" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ChatRoom" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -86,32 +82,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/gui/new" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/gui/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main_chat_gui" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="ChatRoom" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/gui" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/gui/main_chat_gui.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/gui/new/client_gui.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -162,13 +137,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ChatRoom" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/gui/new" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/gui/new/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main_client" />
         <item itemvalue="Python.main_server" />
         <item itemvalue="Python.client_app" />
-        <item itemvalue="Python.main_client" />
-        <item itemvalue="Python.main_chat_gui" />
-        <item itemvalue="Python.main" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.client_gui" />
       </list>
     </recent_temporary>
   </component>

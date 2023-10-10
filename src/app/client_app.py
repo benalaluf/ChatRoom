@@ -19,6 +19,14 @@ class ClientApp(ClientConn):
         self.client_gui = ClientGUI()
         self.connect_front_to_back()
 
+    def main(self):
+        threading.Thread(target=super().main).start()
+        self.run_gui()
+
+    def connect_front_to_back(self):
+        self.client_gui.login_page.login_button.clicked.connect(self._app_register)
+        self.client_gui.chat_page.send_button.clicked.connect(self._send)
+
     def handle_packet(self, packet: Packet):
         print('recvec packet')
         if packet.packet_type == PacketType.MSG:
@@ -28,7 +36,7 @@ class ClientApp(ClientConn):
         if packet.packet_type == PacketType.LOAD_CHAT:
             print('received chat history')
             chat = packet.payload.decode()
-            chat = chat.split('\n')
+            chat = chat.split('\n')[:-1]
             self.client_gui.chat_page.add_msg_to_chat(chat)
 
         if packet.packet_type == PacketType.NEW_USER:
@@ -38,24 +46,16 @@ class ClientApp(ClientConn):
             MessageDelegate.update_usernames_color(username, color)
             print('new client', username, color)
 
-    def connect_front_to_back(self):
-        self.client_gui.login_page.login_button.clicked.connect(self.app_register)
-        self.client_gui.chat_page.send_button.clicked.connect(self.send)
     def run_gui(self):
         self.client_gui.show()
         sys.exit(self.app.exec_())
 
-    def send(self):
+    def _send(self):
         message = self.client_gui.chat_page.get_input_text()
         self.send_message(message)
 
-    def app_register(self):
+    def _app_register(self):
         username = self.client_gui.login_page.username_field.text()
         color = self.client_gui.login_page.color_field.text()
         super().register(username, color)
         self.client_gui.chat()
-
-    def main(self):
-        threading.Thread(target=super().main).start()
-        self.run_gui()
-

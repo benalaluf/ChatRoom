@@ -6,44 +6,54 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QLineEdit
 class LoginPage(QWidget):
     def __init__(self, parent):
         super().__init__()
-        self.layout = QGridLayout()
+        self.layout = QVBoxLayout()
+        self.layout.setAlignment(Qt.AlignTop)
+        self.grid = QGridLayout()
         self.parent = parent
         self.username = None
         self.color = None
 
-        # Headline Label
         self.headline_label = QLabel("Login", self)
-        self.headline_label.setStyleSheet("font-size: 24px; font-weight: bold;")
-        self.layout.addWidget(self.headline_label, 0, 0, 1, 2)  # Span two columns
+        self.headline_label.setStyleSheet("font-size: 36px; font-weight: bold;")
+        self.headline_label.setAlignment(Qt.AlignCenter)
+        self.layout.addWidget(self.headline_label)
 
-        # Username Input
         self.username_label = QLabel("Username:", self)
+        self.username_label.setStyleSheet("font-size: 18px;")
         self.username_field = QLineEdit(self)
-        self.username_field.setPlaceholderText("enter your username")
+        self.username_field.setPlaceholderText("Enter your username")
 
-        self.layout.addWidget(self.username_label, 1, 0, 1, 2)  # Span two columns
-        self.layout.addWidget(self.username_field, 2, 0, 1, 3)  # Span two columns
+        self.username_field.setStyleSheet("height: 40px; font-size: 18px;")
 
-        # Color Input
+        self.grid.addWidget(self.username_label, 1, 0, 1, 2)
+        self.grid.addWidget(self.username_field, 2, 0, 1, 3)
+
         self.color_label = QLabel("Color:", self)
+        self.color_label.setStyleSheet("font-size: 18px;")
         self.color_field = QLineEdit(self)
-        self.color_field.setPlaceholderText("enter a color name or automatically pick")
+        self.color_field.setPlaceholderText("Enter a color name or automatically pick")
         self.color_button = QPushButton('Pick Color', self)
-        self.color_button.clicked.connect(self.openColorDialog)  # Connect the button to the dialog
-        self.layout.addWidget(self.color_label, 3, 0, 1, 2)  # Span two columns
-        self.layout.addWidget(self.color_field, 4, 0, 1, 3)  # Span two columns
-        self.layout.addWidget(self.color_button, 4, 2, 1, 1)  # Span two columns
+        self.color_button.clicked.connect(self.openColorDialog)
+        self.color_button.setFixedHeight(50)
 
-        # Login Button
+        self.color_field.setStyleSheet("height: 40px; font-size: 18px;")
+
+        self.grid.addWidget(self.color_label, 3, 0, 1, 2)
+        self.grid.addWidget(self.color_field, 4, 0, 1, 2)
+        self.grid.addWidget(self.color_button, 4, 2, 1, 1)
+
         self.login_button = QPushButton('Login', self)
-        self.layout.addWidget(self.login_button, 6, 0, 1, 3)  # Span two columns
 
-        # Set column stretch to make it symmetrical
-        self.layout.setColumnStretch(0, 1)
-        self.layout.setColumnStretch(1, 1)
+        self.login_button.setStyleSheet(
+            "height: 40px; background-color: #007ACC; color: white; font-weight: bold; font-size: 18px;")
 
-        # Set row stretch for spacing
-        self.layout.setRowStretch(8, 1)
+        self.grid.addWidget(self.login_button, 6, 0, 1, 3)
+
+        self.grid.setColumnStretch(0, 1)
+        self.grid.setColumnStretch(1, 1)
+
+        self.grid.setRowStretch(8, 1)
+        self.layout.addLayout(self.grid)
 
         self.setLayout(self.layout)
 
@@ -52,4 +62,3 @@ class LoginPage(QWidget):
         if color.isValid():
             html_color_name = color.name(QColor.HexRgb)
             self.color_field.setText(html_color_name)
-

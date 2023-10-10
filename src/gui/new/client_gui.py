@@ -1,10 +1,7 @@
 import sys
 
 import qdarktheme
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget, QStackedWidget, \
-    QHBoxLayout, QScrollArea, QListWidget, QListWidgetItem, QFileDialog, QMessageBox, QProgressBar
+from PyQt5.QtWidgets import QApplication, QMainWindow,QVBoxLayout, QWidget, QStackedWidget
 
 from src.gui.new.chat_page import ChatPage
 from src.gui.new.login_page import LoginPage
