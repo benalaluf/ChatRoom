@@ -28,7 +28,6 @@ class ClientApp(ClientConn):
         self.client_gui.chat_page.send_button.clicked.connect(self._send)
 
     def handle_packet(self, packet: Packet):
-        print('recvec packet')
         if packet.packet_type == PacketType.MSG:
             self.client_gui.chat_page.add_msg_to_chat([packet.payload.decode()])
             print(packet.payload.decode())

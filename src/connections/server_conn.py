@@ -30,7 +30,7 @@ class Server:
         while True:
             conn, addr = self.server.accept()
             threading.Thread(target=self.handel_connection, args=(conn, addr)).start()
-            print(f'connection from: {addr}')
+            # print(f'connection from: {addr}')
 
     def broadcast(self, packet: Packet):
         for client in self.connected_clients:
@@ -53,8 +53,8 @@ class Server:
 
             self.load_chat(client)
 
-            print(f'New Client: {payload, addr}')
             message = f"*{client.username} joined"
+            print(message)
             self.chat_messages.append(message)
             packet = Packet(PacketType.MSG,payload=message.encode())
             self.broadcast(packet)
@@ -76,7 +76,6 @@ class Server:
             print(message)
 
         if packet.packet_type == PacketType.LOAD_CHAT:
-            print(client.username + "asked to loadchat")
             self.load_chat(client)
 
 
@@ -96,12 +95,10 @@ class Server:
                 self.connected_clients.remove(client)
                 self.was_conncted_clients.append(client)
                 client.conn.close()
-                print("connected clients")
                 for client in self.connected_clients:
                     print(client.username)
                 break
 
-        print("breadked")
 
 
 
@@ -112,9 +109,7 @@ class Server:
                 chat_history += line + '\n'
             packet = Packet(PacketType.LOAD_CHAT, chat_history.encode())
             SendPacket.send_packet(client.conn, packet)
-            print(chat_history)
 
         for user in self.connected_clients + self.was_conncted_clients:
             packet = Packet(PacketType.NEW_USER, f'{user.username}:{user.color}'.encode())
             SendPacket.send_packet(client.conn, packet)
-            print(packet.payload.decode())

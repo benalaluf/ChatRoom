@@ -56,4 +56,4 @@ class ClientConn(ABC):
             username = payload[0]
             color = payload[1]
             MessageDelegate.update_usernames_color(username, color)
-            print('new client', username, color)
+            # print('new client', username, color)

@@ -1,4 +1,4 @@
 from src.connections.server_conn import Server
 
 if __name__ == '__main__':
-    server = Server('0.0.0.0', 6060).main()
+    server = Server('0.0.0.0', 8080).main()
