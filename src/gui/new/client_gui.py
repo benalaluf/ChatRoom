@@ -3,6 +3,7 @@ import sys
 import qdarktheme
 from PyQt5.QtWidgets import QApplication, QMainWindow,QVBoxLayout, QWidget, QStackedWidget
 
+from src.gui.new.admin_page import AdminPage
 from src.gui.new.chat_page import ChatPage
 from src.gui.new.login_page import LoginPage
 from src.gui.new.menu_page import MainMenuPage
@@ -15,6 +16,7 @@ class ClientGUI(QMainWindow):
         self.menu_page = MainMenuPage(self)
         self.login_page = LoginPage(self)
         self.chat_page = ChatPage(self)
+        self.admin_page = AdminPage(self)
         self.init_gui()
 
     def init_gui(self):
@@ -37,6 +39,9 @@ class ClientGUI(QMainWindow):
 
         self.stacked_widget.addWidget(self.login_page)
 
+        self.stacked_widget.addWidget(self.admin_page)
+
+
 
 
     def login(self):
@@ -44,6 +49,10 @@ class ClientGUI(QMainWindow):
 
     def chat(self):
         self.stacked_widget.setCurrentWidget(self.chat_page)
+
+    def admin(self):
+        self.admin_page.update_users()
+        self.stacked_widget.setCurrentWidget(self.admin_page)
 
     def host(self):
         self.stacked_widget.setCurrentWidget(self.host_page)

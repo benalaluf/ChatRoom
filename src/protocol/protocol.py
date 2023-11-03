@@ -22,6 +22,7 @@ class PacketType(Enum):
     REGISTER = 2
     LOAD_CHAT = 3
     NEW_USER = 4
+    MUTE =6
     DISCONNECT = 255
 
 

@@ -11,6 +11,7 @@ class ChatPage(QWidget):
 
         self.layout = QVBoxLayout()
 
+
         self.message_view = QListView()
         self.model = QStringListModel()
         self.message_view.setModel(self.model)
@@ -19,8 +20,11 @@ class ChatPage(QWidget):
         self.layout.addWidget(self.message_view)
 
         self.input_layout = QHBoxLayout()
+        self.admin_page_button = QPushButton('@')
+        self.admin_page_button.clicked.connect(parent.admin)
         self.input_field = QLineEdit()
         self.send_button = QPushButton('Send')
+        self.input_layout.addWidget(self.admin_page_button)
         self.input_layout.addWidget(self.input_field)
         self.input_layout.addWidget(self.send_button)
 
@@ -35,6 +39,7 @@ class ChatPage(QWidget):
         text = self.input_field.text()
         self.input_field.clear()
         return text
+
 
 
 class MessageDelegate(QStyledItemDelegate):

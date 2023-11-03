@@ -78,6 +78,7 @@ class Server:
         if packet.packet_type == PacketType.LOAD_CHAT:
             self.load_chat(client)
 
+        
 
     def handel_client(self, client: ClientData):
         while True:

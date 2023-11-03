@@ -18,6 +18,7 @@ class ClientApp(ClientConn):
         qdarktheme.setup_theme()
         self.client_gui = ClientGUI()
         self.connect_front_to_back()
+        self.connected_client = []
 
     def main(self):
         threading.Thread(target=super().main).start()
@@ -26,6 +27,9 @@ class ClientApp(ClientConn):
     def connect_front_to_back(self):
         self.client_gui.login_page.login_button.clicked.connect(self._app_register)
         self.client_gui.chat_page.send_button.clicked.connect(self._send)
+
+        self.client_gui.admin_page.mute_button.clicked.connect(self._mute)
+        self.client_gui.admin_page.kick_button.clicked.connect(self._kick)
 
     def handle_packet(self, packet: Packet):
         if packet.packet_type == PacketType.MSG:
@@ -44,6 +48,7 @@ class ClientApp(ClientConn):
             color = payload[1]
             MessageDelegate.update_usernames_color(username, color)
             print('new client', username, color)
+            self.client_gui.admin_page.connected_client.append(username)
 
     def run_gui(self):
         self.client_gui.show()
@@ -52,6 +57,12 @@ class ClientApp(ClientConn):
     def _send(self):
         message = self.client_gui.chat_page.get_input_text()
         self.send_message(message)
+
+    def _kick(self):
+        self.client_gui.chat()
+
+    def _mute(self):
+        self.client_gui.chat()
 
     def _app_register(self):
         username = self.client_gui.login_page.username_field.text()
