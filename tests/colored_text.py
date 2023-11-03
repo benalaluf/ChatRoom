@@ -3,6 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QTextDocument, QTextCharFormat, QTextCursor, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidget, QListWidgetItem, QWidget, QVBoxLayout, QLabel
 
+
 class ColoredTextLabel(QWidget):
     def __init__(self, text, parent=None):
         super().__init__(parent)
@@ -35,6 +36,7 @@ class ColoredTextLabel(QWidget):
         self.label.setText(document.toPlainText())
         self.adjustSize()
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -58,11 +60,13 @@ class MainWindow(QMainWindow):
         item.setSizeHint(colored_label.sizeHint())
         self.listWidget.setItemWidget(item, colored_label)
 
+
 def main():
     app = QApplication(sys.argv)
     mainWindow = MainWindow()
     mainWindow.show()
     sys.exit(app.exec_())
+
 
 if __name__ == '__main__':
     main()
