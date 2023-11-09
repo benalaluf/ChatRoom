@@ -1,12 +1,11 @@
 import sys
-import threading
 
 import qdarktheme
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QApplication
 
 from src.connections.client_conn import ClientConn
-from src.gui.new.client_gui import ClientGUI
+from src.gui.client_gui import ClientGUI
 from src.protocol.protocol import Packet, PacketType
 
 
@@ -109,7 +108,6 @@ class ClientApp:
     def on_kick(self):
         print("you have been kicked!!")
         self.client_gui.show_kick()
-        self.client_conn.connected = False
 
     def on_mute(self):
         print("you have been muted!!")

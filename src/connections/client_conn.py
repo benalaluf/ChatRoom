@@ -3,7 +3,6 @@ __author__ = 'Ben'
 import threading
 from abc import ABC, abstractmethod
 
-from src.gui.main import MessageDelegate, ClientGUI
 from src.protocol.client_data import ServerClientData, ClientClientData
 from src.protocol.protocol import *
 from src.utils.check_color import check_color
@@ -66,6 +65,9 @@ class ClientConn:
 
         if packet.packet_type == PacketType.USER_DISCONNECTED:
             self._user_dissconnected(packet)
+
+        if packet.packet_type == PacketType.KICK:
+            self.connected = False
 
         if self.handle_packet_expansion:
             self.handle_packet_expansion(packet)

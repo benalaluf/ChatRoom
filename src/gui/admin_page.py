@@ -1,7 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QHBoxLayout, QComboBox, QListWidget
 
-from src.gui.main import MessageDelegate
 
 
 class AdminPage(QWidget):

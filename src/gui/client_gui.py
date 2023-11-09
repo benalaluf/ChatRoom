@@ -1,14 +1,11 @@
-import sys
-
-import qdarktheme
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QStackedWidget, QAction
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QStackedWidget
 
 from src.connections.client_conn import ClientConn
-from src.gui.new.admin_page import AdminPage
-from src.gui.new.chat_page import ChatPage
-from src.gui.new.kick_page import KickPage
-from src.gui.new.login_page import LoginPage
-from src.gui.new.menu_page import MainMenuPage
+from src.gui.admin_page import AdminPage
+from src.gui.chat_page import ChatPage
+from src.gui.kick_page import KickPage
+from src.gui.login_page import LoginPage
+from src.gui.menu_page import MainMenuPage
 
 
 class ClientGUI(QMainWindow):
@@ -20,8 +17,8 @@ class ClientGUI(QMainWindow):
         self.menu_page = MainMenuPage(self)
         self.login_page = LoginPage(self)
         self.chat_page = ChatPage(self)
-        self.admin_page = AdminPage(self)
         self.kick_page = KickPage(self)
+        self.admin_page = AdminPage(self)
 
         self.stacked_widget = QStackedWidget()
         self.init_gui()
@@ -48,8 +45,6 @@ class ClientGUI(QMainWindow):
 
         self.stacked_widget.addWidget(self.kick_page)
 
-        # self.setStyleSheet("background-image: url('images/macos.jpeg'); background-repeat: no-repeat;")
-
     def connect_client_conn(self, client_conn: ClientConn):
         self.client_conn = client_conn
 
@@ -72,7 +67,5 @@ class ClientGUI(QMainWindow):
     def show_kick(self):
         self.stacked_widget.setCurrentWidget(self.kick_page)
 
-
     # def host(self):
     #     self.stacked_widget.setCurrentWidget(self.host_page)
-
