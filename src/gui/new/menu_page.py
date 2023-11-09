@@ -21,13 +21,13 @@ class MainMenuPage(QWidget):
         layout.addSpacing(150)
 
         button_layout = QVBoxLayout()
-        self.download_button = QPushButton("Join")
-        self.download_button.setStyleSheet("color: white; font-size: 24px; "
-                                           "border-radius: 10px;")
-        self.download_button.setToolTip("Join a chat")
-        self.download_button.clicked.connect(self.parent.show_login)
-        self.download_button.setFixedHeight(80)
-        button_layout.addWidget(self.download_button)
+        self.join_button = QPushButton("Join")
+        self.join_button.setToolTip("Join a chat")
+        self.join_button.clicked.connect(self.parent.show_login)
+        self.join_button.setFixedHeight(80)
+        self.join_button.setStyleSheet(
+            "height: 40px; background-color: #007ACC; color: white; font-weight: bold; font-size: 18px;border-radius: 20px;")
+        button_layout.addWidget(self.join_button)
 
 
         layout.addLayout(button_layout)

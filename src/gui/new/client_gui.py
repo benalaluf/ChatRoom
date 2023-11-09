@@ -48,6 +48,8 @@ class ClientGUI(QMainWindow):
 
         self.stacked_widget.addWidget(self.kick_page)
 
+        # self.setStyleSheet("background-image: url('images/macos.jpeg'); background-repeat: no-repeat;")
+
     def connect_client_conn(self, client_conn: ClientConn):
         self.client_conn = client_conn
 

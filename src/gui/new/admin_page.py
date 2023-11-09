@@ -9,7 +9,6 @@ class AdminPage(QWidget):
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
-        self.connected_client = set()
         self.setup_ui()
 
 
@@ -17,7 +16,10 @@ class AdminPage(QWidget):
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.setLayout(layout)
-
+        self.back_button = QPushButton('<-')
+        self.back_button.clicked.connect(self.parent.show_chat)
+        self.back_button.setFixedWidth(30)
+        layout.addWidget(self.back_button, 0, Qt.AlignmentFlag.AlignLeft)
         title_label = QLabel("AdminPage")
         title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         title_label.setStyleSheet("font-size: 36px;")
@@ -27,7 +29,7 @@ class AdminPage(QWidget):
 
 
         self.user_list = QListWidget()
-        self.user_list.addItems(self.connected_client)
+        self.user_list.addItems([])
         layout.addWidget(self.user_list)
 
         button_layout = QVBoxLayout()
@@ -50,7 +52,7 @@ class AdminPage(QWidget):
         self.admin_button = QPushButton("make admin")
         self.admin_button.setStyleSheet("color: white; font-size: 24px; "
                                        "border-radius: 10px;")
-        self.admin_button.setToolTip("Mute a user")
+        self.admin_button.setToolTip("make admin")
         self.admin_button.setFixedHeight(80)
         button_layout.addWidget(self.admin_button)
 

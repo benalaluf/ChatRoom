@@ -22,14 +22,22 @@ class ChatPage(QWidget):
         self.input_layout = QHBoxLayout()
         self.admin_page_button = QPushButton('@')
         self.admin_page_button.clicked.connect(parent.show_admin)
+        self.admin_page_button.setStyleSheet("color: red; font-size: 16px; font-weight: bold; "
+                                       "border-radius: 5px;")
         self.input_field = QLineEdit()
+        self.input_field.setPlaceholderText("Send a message...")
         self.send_button = QPushButton('Send')
+        self.send_button.setStyleSheet("color: white; font-size: 14px; "
+                                           "border-radius: 5px; font-weight: bold ; background-color: #007ACC")
         self.input_layout.addWidget(self.admin_page_button)
         self.input_layout.addWidget(self.input_field)
         self.input_layout.addWidget(self.send_button)
+        self.input_layout.setSpacing(5)
+
 
         self.layout.addLayout(self.input_layout)
         self.setLayout(self.layout)
+
 
 
     def add_msg_to_chat(self, message: list):

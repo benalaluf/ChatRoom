@@ -34,6 +34,8 @@ class LoginPage(QWidget):
         self.color_field = QLineEdit(self)
         self.color_field.setPlaceholderText("Enter a color name or automatically pick")
         self.color_button = QPushButton('Pick Color', self)
+        self.color_button.setStyleSheet("color: white; font-size: 14px; "
+                                       "border-radius: 5px; font-weight: bold")
         self.color_button.clicked.connect(self.openColorDialog)
         self.color_button.setFixedHeight(50)
 
