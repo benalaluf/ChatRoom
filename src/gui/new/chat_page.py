@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QStringListModel, Qt
 from PyQt5.QtGui import QColor, QTextDocument, QFont
 from PyQt5.QtWidgets import QWidget, QListView, QAbstractItemView, QHBoxLayout, QLineEdit, QPushButton, QVBoxLayout, \
-    QStyledItemDelegate
+    QStyledItemDelegate, QMessageBox
 
 
 class ChatPage(QWidget):
@@ -15,13 +15,13 @@ class ChatPage(QWidget):
         self.message_view = QListView()
         self.model = QStringListModel()
         self.message_view.setModel(self.model)
-        self.message_view.setItemDelegate(MessageDelegate())
+        self.message_view.setItemDelegate(MessageDelegate(parent))
         self.message_view.setSelectionMode(QAbstractItemView.NoSelection)
         self.layout.addWidget(self.message_view)
 
         self.input_layout = QHBoxLayout()
         self.admin_page_button = QPushButton('@')
-        self.admin_page_button.clicked.connect(parent.admin)
+        self.admin_page_button.clicked.connect(parent.show_admin)
         self.input_field = QLineEdit()
         self.send_button = QPushButton('Send')
         self.input_layout.addWidget(self.admin_page_button)
@@ -30,6 +30,7 @@ class ChatPage(QWidget):
 
         self.layout.addLayout(self.input_layout)
         self.setLayout(self.layout)
+
 
     def add_msg_to_chat(self, message: list):
         self.messages.extend(message)
@@ -40,17 +41,27 @@ class ChatPage(QWidget):
         self.input_field.clear()
         return text
 
+    def set_muted(self):
+        self.input_field.setPlaceholderText("you are muted!!!")
+
+
 
 
 class MessageDelegate(QStyledItemDelegate):
-    username_colors = dict()
 
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__()
+        self.parent = parent
 
-    @staticmethod
-    def update_usernames_color(username, color):
-        MessageDelegate.username_colors.update({username: color})
+    def get_color_by_user(self, username):
+        clients = self.parent.client_conn.connected_clients + self.parent.client_conn.was_connected_clients
+        for client in clients:
+            if client.username == username:
+                return client.color
+        color = QColor(hash(username) % 256, hash(username + "color") % 256, hash(username + "text") % 256)
+        color = color.name()
+        return color
+
 
     def paint(self, painter, option, index):
 
@@ -67,12 +78,19 @@ class MessageDelegate(QStyledItemDelegate):
                     username = parts[0]
                     content = parts[1]
 
-                    if username not in self.username_colors:
-                        color = QColor(hash(username) % 256, hash(username + "color") % 256, hash(username + "text") % 256)
-                        self.username_colors[username] = color.name()
+                    color = self.get_color_by_user(username)
 
-                    color = self.username_colors[username]
-                    username_colored = f'<font color="{color}">{username}</font>'
+                    username_colored = ''
+                    if username[0] == '@':
+                        color = self.get_color_by_user(username[1:])
+                        username_colored+=f'<font color="#ff2349">@</font>'
+                        username_colored += f'<font color="{color}">{username[1:]}</font>'
+                    elif username[0] == "!":
+                        color = self.get_color_by_user(username[1:])
+                        username_colored += f'<font color="#ff0000">Private </font>'
+                        username_colored += f'<font color="{color}">{username[1:]}</font>'
+                    else:
+                        username_colored += f'<font color="{color}">{username}</font>'
 
                     formatted_message = f"{username_colored}: {content}"
 

@@ -1,6 +1,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QLineEdit, QColorDialog, QPushButton, QGridLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QLineEdit, QColorDialog, QPushButton, \
+    QGridLayout, QMessageBox
 
 
 class LoginPage(QWidget):
@@ -56,6 +57,8 @@ class LoginPage(QWidget):
         self.layout.addLayout(self.grid)
 
         self.setLayout(self.layout)
+
+
 
     def openColorDialog(self):
         color = QColorDialog.getColor()

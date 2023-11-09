@@ -7,9 +7,14 @@ from colour import Color
 
 
 @dataclass
-class ClientData:
+class ServerClientData:
     conn: socket.socket = field(repr=False)
     addr: tuple
+    username: str
+    color: str
+
+@dataclass
+class ClientClientData:
     username: str
     color: str
 

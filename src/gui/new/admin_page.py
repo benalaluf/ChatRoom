@@ -9,7 +9,7 @@ class AdminPage(QWidget):
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
-        self.connected_client = []
+        self.connected_client = set()
         self.setup_ui()
 
 
@@ -47,15 +47,22 @@ class AdminPage(QWidget):
         self.kick_button.setFixedHeight(80)
         button_layout.addWidget(self.kick_button)
 
+        self.admin_button = QPushButton("make admin")
+        self.admin_button.setStyleSheet("color: white; font-size: 24px; "
+                                       "border-radius: 10px;")
+        self.admin_button.setToolTip("Mute a user")
+        self.admin_button.setFixedHeight(80)
+        button_layout.addWidget(self.admin_button)
+
         layout.addLayout(button_layout)
 
 
     def get_user(self):
         return self.user_list.currentItem()
 
-    def update_users(self,):
+    def update_users(self):
         self.user_list.clear()
-        self.user_list.addItems(self.connected_client)
+        self.user_list.addItems(client.username for client in self.parent.client_conn.connected_clients)
         print(self.connected_client)
 
 

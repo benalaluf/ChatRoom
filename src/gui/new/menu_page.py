@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QPushButton
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QPushButton, QMessageBox
 
 
 class MainMenuPage(QWidget):
@@ -25,9 +25,11 @@ class MainMenuPage(QWidget):
         self.download_button.setStyleSheet("color: white; font-size: 24px; "
                                            "border-radius: 10px;")
         self.download_button.setToolTip("Join a chat")
-        self.download_button.clicked.connect(self.parent.login)
+        self.download_button.clicked.connect(self.parent.show_login)
         self.download_button.setFixedHeight(80)
         button_layout.addWidget(self.download_button)
 
 
         layout.addLayout(button_layout)
+
+
