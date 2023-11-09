@@ -69,7 +69,6 @@ class MessageDelegate(QStyledItemDelegate):
             painter.save()
 
             message = index.data(Qt.DisplayRole)
-
             if message:
                 if message[0] == '*':
                     formatted_message = f'<font color="gray">{message[1:]}</font>'

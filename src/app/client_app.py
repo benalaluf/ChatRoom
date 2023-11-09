@@ -42,8 +42,9 @@ class ClientApp:
             print(packet.payload.decode())
 
         if packet.packet_type == PacketType.USER_DISCONNECTED:
-            self.client_gui.chat_page.add_msg_to_chat(f"* {packet.payload.decode()} Left")
-            print("test")
+            payload = packet.payload.decode()
+            payload = payload.split(":")
+            self.client_gui.chat_page.add_msg_to_chat([f"*{payload[0]} Left"])
 
         if packet.packet_type == PacketType.LOAD_CHAT:
             print('received chat history')
@@ -76,7 +77,6 @@ class ClientApp:
             color = QColor(hash(username) % 256, hash(username + "color") % 256, hash(username + "text") % 256)
             color = color.name()
 
-        print(color)
         self.client_conn.register(username, color)
         self.client_gui.show_chat()
 
@@ -85,7 +85,7 @@ class ClientApp:
         if message == '!quit':
             self.client_conn.quit()
             self.client_gui.show_menu()
-        if not self.mute:
+        elif not self.mute:
             if message[0] == '!':
                 self.client_conn.send_private_message(message)
             else:
@@ -109,6 +109,7 @@ class ClientApp:
     def on_kick(self):
         print("you have been kicked!!")
         self.client_gui.show_kick()
+        self.client_conn.connected = False
 
     def on_mute(self):
         print("you have been muted!!")

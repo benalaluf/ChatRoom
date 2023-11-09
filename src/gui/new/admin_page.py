@@ -63,6 +63,7 @@ class AdminPage(QWidget):
     def update_users(self):
         self.user_list.clear()
         self.user_list.addItems(client.username for client in self.parent.client_conn.connected_clients)
-        print(self.connected_client)
+        for client in self.parent.client_conn.connected_clients:
+            print(client.username)
 
 

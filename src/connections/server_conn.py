@@ -69,7 +69,7 @@ class Server:
                 self.handel_packet(packet, client)
 
             except Exception:
-                self.remove_client(client)
+                self.client_dissconnected(client)
                 break
 
     def handel_packet(self, packet: Packet, client: ServerClientData):
@@ -89,7 +89,7 @@ class Server:
             self._make_admin(packet, client)
 
         if packet.packet_type == PacketType.DISCONNECT:
-            self.remove_client(client)
+            self.client_dissconnected(client)
 
         if packet.packet_type == PacketType.PRIVATE:
             self._private_message(packet, client)
@@ -113,7 +113,7 @@ class Server:
             self._broadcast(packet)
             print(message)
 
-    def _make_admin(self,packet: Packet, client: ServerClientData):
+    def _make_admin(self, packet: Packet, client: ServerClientData):
         if client.username in self.admins:
             client_to_make_admin = packet.payload.decode()
             for connected_client in self.connected_clients:
@@ -128,7 +128,7 @@ class Server:
     def _private_message(self, packet: Packet, client_p: ServerClientData):
         msg = packet.payload.decode()
         msg = msg[1:]
-        msg= msg.split(":")
+        msg = msg.split(":")
         users = msg[0].split(",")
         user_from = users[0]
         user_to = users[1]
@@ -160,11 +160,11 @@ class Server:
                     SendPacket.send_packet(connected_client.conn, packet)
 
                     message = f"*{connected_client.username} was kicked"
+                    self.remove_client(connected_client)
                     packet = Packet(PacketType.MSG, payload=message.encode())
                     self._broadcast(packet)
                     self.chat_messages.append(message)
                     print(message)
-                    self.remove_client(connected_client)
 
     def mute_client(self, packet: Packet, client: ServerClientData):
         if client.username in self.admins:
@@ -181,16 +181,19 @@ class Server:
                     self.muted.append(client)
                     print(message)
 
+    def client_dissconnected(self, client: ServerClientData):
+        msg = f"{client.username}:{client.color}"
+        packet = Packet(PacketType.USER_DISCONNECTED, payload=msg.encode())
+        self.remove_client(client)
+        self._broadcast(packet)
+        message = f"*{client.username} Left"
+        self.chat_messages.append(message)
+        print(message)
+
     def remove_client(self, client: ServerClientData):
         if client in self.connected_clients:
-            packet = Packet(PacketType.USER_DISCONNECTED, payload=client.username.encode())
-            self._broadcast(packet)
             self.connected_clients.remove(client)
-            message = f"*{client.username} Left"
-            self.chat_messages.append(message)
-            print(message)
+
         if client not in self.was_connected_clients:
             self.was_connected_clients.append(client)
         client.conn.close()
-
-

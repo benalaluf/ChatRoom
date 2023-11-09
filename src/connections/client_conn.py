@@ -17,9 +17,7 @@ class ClientConn:
         self.username = None
         self.color = None
 
-
     def main(self):
-        print("test")
         threading.Thread(target=self.receive).start()
 
     def init_client_conn(self):
@@ -56,8 +54,9 @@ class ClientConn:
             try:
                 packet = HandelPacket.recv_packet(self.client)
                 self.handle_packet(packet)
-            except Exception:
-                print("disconnecting")
+            except Exception as e:
+                print("dissconetig", e)
+                self.quit()
                 break
         self.client.close()
 
@@ -75,12 +74,15 @@ class ClientConn:
         packet = Packet(PacketType.MSG, msg.encode())
         SendPacket.send_packet(self.client, packet)
 
-    def send_private_message(self, msg:str):
-        msg = msg[1:]
-        msg = msg.split(": ")
-        msg=f"!{self.username},{msg[0]}:{msg[1]}"
-        packet = Packet(PacketType.PRIVATE, msg.encode())
-        SendPacket.send_packet(self.client, packet)
+    def send_private_message(self, msg: str):
+        try:
+            msg = msg[1:]
+            msg = msg.split(": ")
+            msg = f"!{self.username},{msg[0]}:{msg[1]}"
+            packet = Packet(PacketType.PRIVATE, msg.encode())
+            SendPacket.send_packet(self.client, packet)
+        except Exception:
+            pass
 
     def mute(self, username: str):
         packet = Packet(PacketType.MUTE, username.encode())
@@ -100,7 +102,6 @@ class ClientConn:
         SendPacket.send_packet(self.client, packet)
         self.client.close()
 
-
     def _new_user(self, packet: Packet):
         payload = packet.payload.decode().split(':')
         username = payload[0]
@@ -111,10 +112,16 @@ class ClientConn:
             self.connected_clients.append(new_client)
 
     def _user_dissconnected(self, packet: Packet):
-        payload = packet.payload.decode().split(':')
+        payload = packet.payload.decode()
+        payload = payload.split(':')
         username = payload[0]
-        color = payload[1]
 
-        old_client = ClientClientData(username, color)
-        self.connected_clients.remove(old_client)
-        self.was_connected_clients.append(old_client)
+        self.remove_connected_client(username)
+
+        self.was_connected_clients.append(ClientClientData(username, payload[1]))
+
+    def remove_connected_client(self, username):
+        for client in self.connected_clients:
+            if client.username == username:
+                self.connected_clients.remove(client)
+                break
