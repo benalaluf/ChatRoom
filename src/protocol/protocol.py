@@ -4,24 +4,29 @@ import socket
 import struct
 from enum import Enum
 
+
 # consept for a simple communication protocol info/questions contact iBen
 
 class PacketConstants:
-
     # packet format
     # 0x/1 byte = type/4 byte = payload length/ payload
 
     TYPE_HEADER_FORMAT = '>B'  # big-big-endian unsigned char (1 byte)
     PAYLOAD_LENGTH_HEADER_FORMAT = '>I'  # big-endian unsigned int (4 byte)
     HEADER_LENGTH = 5  # bytes
-    NO_DATA = b'None'
+    NO_DATA = b'nahthing'
 
 
 class PacketType(Enum):
     MSG = 1
-    REGISTER = 2
-    LOAD_CHAT = 3
-    NEW_USER = 4
+    MAKE_ADMIN = 2
+    KICK = 3
+    MUTE = 4
+    PRIVATE = 5
+    REGISTER = 6
+    LOAD_CHAT = 7
+    NEW_USER = 8
+    USER_DISCONNECTED = 9
     DISCONNECT = 255
 
 

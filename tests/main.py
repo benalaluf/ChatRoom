@@ -6,8 +6,6 @@ from tkinter import simpledialog
 
 class ChatGUI:
     def __init__(self):
-       
-
         self.nickname = 'ben'
         self.gui_done = False
         self.running = True
